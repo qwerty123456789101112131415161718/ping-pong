@@ -3,11 +3,23 @@ from random import randint
 from math import *
 finish = False
 run = True
+rand = 0
+rand2 = 0
 clock = time.Clock()
 FPS = 60
 speed = 5
-speed_ball_y = 5
-speed_ball_x = 5
+
+rand = randint(1,2)
+if rand==1:
+    speed_ball_y = 5
+elif rand == 2:
+    speed_ball_y = -5
+rand2 = randint(1,2)
+if rand2==1:
+    speed_ball_x = 5
+elif rand2 == 2:
+    speed_ball_x = -5
+
 font.init()
 font1 = font.SysFont('Arial', 60)
 win1 = font1.render('PLAYER 1 WIN', True, (0, 0, 0))
@@ -56,16 +68,6 @@ window = display.set_mode((win_width, win_height))
 #background = transform.scale(image.load(back), (win_width, win_height))
 window.fill(back)
 display.set_caption("Ping_Pong")
-
-
-
-
-
-
-
-
-
-
 while run:
     # событие нажатия на кнопку Закрыть
     for e in event.get():
@@ -78,12 +80,14 @@ while run:
         p1.update_left()
         p2.update_right()
         if ball.rect.y >= win_height - 40 or ball.rect.y <= 0:
-            speed_ball_y = abs(speed_ball_y + 0.25)
+            speed_ball_y = speed_ball_y/0.95
+            #speed_ball_y = -1*(abs(speed_ball_y + 0.25))
             speed_ball_y *= -1
         ball.rect.x += speed_ball_x
         ball.rect.y += speed_ball_y
         if sprite.collide_rect(p1,ball) or sprite.collide_rect(p2,ball):
-            speed_ball_x = abs(speed_ball_x + 0.25)
+            speed_ball_x = speed_ball_x/0.95
+            #speed_ball_x = -1*(abs(speed_ball_x + 0.25))
             speed_ball_x *= -1
         if ball.rect.x <= 0:
             finish = True
